@@ -1,0 +1,6 @@
+upm-package/      # the git checkout
+  package.json
+local-unity-project/
+  Assets/
+  Packages/
+    manifest.json # depends on ../upm-package
