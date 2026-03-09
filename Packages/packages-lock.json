@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.overhealer.core": {
-      "version": "file:com.overhealer.com.overhealer.core",
+      "version": "file:com.overhealer.core",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
