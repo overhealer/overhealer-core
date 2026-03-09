@@ -1,0 +1,11 @@
+{
+    "name": "Overhealer.Comoverhealercore.Tests",
+    "references": [
+        "Overhealer.Comoverhealercore"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Overhealer.Comoverhealercore.Editor.Tests",
+    "references": [
+        "Overhealer.Comoverhealercore.Editor",
+        "Overhealer.Comoverhealercore"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}
