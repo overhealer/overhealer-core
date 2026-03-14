@@ -10,7 +10,7 @@ namespace overhealer.Core
         private static Action<GameObject> OnObjectDelete;
         private static Action<IUpdatable> OnUpdatableCreate;
 
-        private UpdateStateMachine gameStateMachine;
+        protected UpdateStateMachine gameStateMachine;
 
         private List<IUpdatable> updatables = new List<IUpdatable>();
         private List<ILateUpdatable> lateUpdatables = new List<ILateUpdatable>();
