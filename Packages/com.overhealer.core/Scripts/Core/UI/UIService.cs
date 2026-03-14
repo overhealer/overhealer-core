@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace overhealer.Core
 {
@@ -41,6 +42,7 @@ namespace overhealer.Core
             }
 
             var newState = GameInstance.CreateObject(GetStatePrefab(state).gameObject, Vector3.zero, Vector3.zero);
+            SceneManager.MoveGameObjectToScene(newState, SceneManager.GetSceneByName("DontDestroyOnLoad"));
             newState.transform.SetParent(mainCanvas.transform, false);
             currentState = newState.GetComponent<UIState>();
 
