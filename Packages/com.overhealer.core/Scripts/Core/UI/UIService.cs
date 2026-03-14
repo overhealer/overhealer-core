@@ -19,6 +19,9 @@ namespace overhealer.Core
         [SerializeField]
         private Canvas mainCanvas;
 
+        [SerializeField]
+        private Transform container;
+
         private UIState currentState;
         private Dictionary<Type, UIState> statesDictionary = new Dictionary<Type, UIState>();
 
@@ -40,7 +43,7 @@ namespace overhealer.Core
                 GameInstance.DestoyObject(currentState.gameObject);
             }
 
-            var newState = GameInstance.CreateObject(GetStatePrefab(state).gameObject, Vector3.zero, Vector3.zero, mainCanvas.gameObject.transform);
+            var newState = GameInstance.CreateObject(GetStatePrefab(state).gameObject, Vector3.zero, Vector3.zero, container);
             currentState = newState.GetComponent<UIState>();
 
             currentState.Enable();
