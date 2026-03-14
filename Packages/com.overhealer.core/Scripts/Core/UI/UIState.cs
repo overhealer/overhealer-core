@@ -6,13 +6,6 @@ namespace overhealer.Core
     public class UIState :
             MonoBehaviour
     {
-        public UIStateEnum State => state;
-
-        [SerializeField]
-        private UIStateEnum state;
-        [SerializeField]
-        private UIStateEnum stateOnClose;
-
         [SerializeField]
         private InputActionReference closeInputAction;
 
@@ -28,9 +21,8 @@ namespace overhealer.Core
                 closeInputAction.action.performed -= Close;
         }
 
-        public void Close(InputAction.CallbackContext callbackContext)
+        public virtual void Close(InputAction.CallbackContext callbackContext)
         {
-            ServiceLocator.Instance.Get<UIService>().EnableState(stateOnClose);
         }
     }
 }

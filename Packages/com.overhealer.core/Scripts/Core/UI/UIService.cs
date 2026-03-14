@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace overhealer.Core
@@ -7,30 +8,31 @@ namespace overhealer.Core
             MonoBehaviour,
             IService
     {
-        public UIStateEnum State
+        public Type State
         {
-            get
-            {
-                if (currentState != null)
-                    return currentState.State;
-                return UIStateEnum.None;
-            }
+            get => currentState.GetType();
         }
 
         [SerializeField]
-        private List<UIState> StatePrefabs;
+        private List<UIState> statePrefabs;
 
         [SerializeField]
         private Canvas mainCanvas;
 
         private UIState currentState;
+        private Dictionary<Type, UIState> statesDictionary = new Dictionary<Type, UIState>();
 
         public void InitUI()
         {
             ServiceLocator.Instance.Add(typeof(UIService), this);
+
+            foreach (var prefab in statePrefabs)
+            {
+                statesDictionary.Add(prefab.GetType(), prefab);
+            }
         }
 
-        public void EnableState(UIStateEnum state)
+        public void EnableState(Type state)
         {
             if (currentState != null)
             {
@@ -45,15 +47,9 @@ namespace overhealer.Core
             currentState.Enable();
         }
 
-        private UIState GetStatePrefab(UIStateEnum state)
+        private UIState GetStatePrefab(Type state)
         {
-            for (int i = 0; i < StatePrefabs.Count; i++)
-            {
-                if (StatePrefabs[i].State == state)
-                    return StatePrefabs[i];
-            }
-
-            return null;
+            return statesDictionary[state];
         }
     }
 }
