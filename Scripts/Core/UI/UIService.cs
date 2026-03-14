@@ -45,7 +45,7 @@ namespace overhealer.Core
 
             var newState = GameInstance.CreateObject(GetStatePrefab(state).gameObject, Vector3.zero, Vector3.zero);
             DontDestroyOnLoad(newState);
-            newState.transform.SetParent(container);
+            newState.transform.SetParent(transform.GetChild(0).GetChild(0));
             currentState = newState.GetComponent<UIState>();
 
             currentState.Enable();
