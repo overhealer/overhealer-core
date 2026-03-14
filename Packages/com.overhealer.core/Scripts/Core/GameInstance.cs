@@ -86,9 +86,9 @@ namespace overhealer.Core
             gameStateMachine.FixedUpdateState();
         }
 
-        public static GameObject CreateObject(GameObject prefab, Vector3 pos, Vector3 rot)
+        public static GameObject CreateObject(GameObject prefab, Vector3 pos, Vector3 rot, Transform parent = null)
         {
-            GameObject newObject = UnityEngine.Object.Instantiate(prefab, pos, Quaternion.Euler(rot));
+            GameObject newObject = UnityEngine.Object.Instantiate(prefab, pos, Quaternion.Euler(rot), parent);
 
             RegisterObject(newObject);
 
