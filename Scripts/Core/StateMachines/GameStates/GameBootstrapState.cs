@@ -32,12 +32,14 @@ namespace overhealer.Core
         public void CreateServices(UIService uiService)
         {
             Debug.Log("Create services...");
-
-            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                if (type.GetCustomAttribute<ServiceAttribute>(true) != null)
+                foreach (Type type in assembly.GetTypes())
                 {
-                    ServiceLocator.Instance.Add(type, (IService)Activator.CreateInstance(type));
+                    if (type.GetCustomAttribute<ServiceAttribute>(true) != null)
+                    {
+                        ServiceLocator.Instance.Add(type, (IService)Activator.CreateInstance(type));
+                    }
                 }
             }
 
