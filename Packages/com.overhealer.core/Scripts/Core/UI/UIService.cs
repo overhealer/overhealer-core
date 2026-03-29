@@ -8,9 +8,9 @@ namespace overhealer.Core
             MonoBehaviour,
             IService
     {
-        public Type State
+        public UIState State
         {
-            get => currentState.GetType();
+            get => currentState;
         }
 
         [SerializeField]
