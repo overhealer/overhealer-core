@@ -6,14 +6,14 @@ namespace overhealer.Core
 {
     public abstract class GameInstance
     {
-        private static Action<GameObject> OnObjectCreate;
-        private static Action<GameObject> OnObjectDelete;
-        private static Action<IUpdatable> OnUpdatableCreate;
+        public static Action<GameObject> OnObjectCreate;
+        public static Action<GameObject> OnObjectDelete;
+        public static Action<IUpdatable> OnUpdatableCreate;
 
         protected UpdateStateMachine gameStateMachine;
 
-        private List<IUpdatable> updatables = new List<IUpdatable>();
-        private List<ILateUpdatable> lateUpdatables = new List<ILateUpdatable>();
+        protected List<IUpdatable> updatables = new List<IUpdatable>();
+        protected List<ILateUpdatable> lateUpdatables = new List<ILateUpdatable>();
 
         public GameInstance()
         {
