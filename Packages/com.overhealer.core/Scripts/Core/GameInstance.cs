@@ -9,11 +9,14 @@ namespace overhealer.Core
         public static Action<GameObject> OnObjectCreate;
         public static Action<GameObject> OnObjectDelete;
         public static Action<IUpdatable> OnUpdatableCreate;
+        public static Action<ILateUpdatable> OnLateUpdatableCreate;
+        public static Action<IFixedUpdatable> OnFixedUpdatableCreate;
 
         protected UpdateStateMachine gameStateMachine;
 
         protected List<IUpdatable> updatables = new List<IUpdatable>();
         protected List<ILateUpdatable> lateUpdatables = new List<ILateUpdatable>();
+        protected List<IFixedUpdatable> fixedUpdatables = new List<IFixedUpdatable>();
 
         public GameInstance()
         {
@@ -36,6 +39,12 @@ namespace overhealer.Core
                 {
                     this.lateUpdatables.Add(lateUpdatables[i]);
                 }
+
+                IFixedUpdatable[] fixedUpdatables = newObject.GetComponentsInChildren<IFixedUpdatable>();
+                for (int i = 0; i < fixedUpdatables.Length; i++)
+                {
+                    this.fixedUpdatables.Add(fixedUpdatables[i]);
+                }
             };
 
             OnObjectDelete = (objectToDelete) =>
@@ -51,11 +60,27 @@ namespace overhealer.Core
                 {
                     this.lateUpdatables.Remove(lateUpdatables[i]);
                 }
+
+                IFixedUpdatable[] fixedUpdatables = objectToDelete.GetComponentsInChildren<IFixedUpdatable>();
+                for (int i = 0; i < fixedUpdatables.Length; i++)
+                {
+                    this.fixedUpdatables.Remove(fixedUpdatables[i]);
+                }
             };
 
             OnUpdatableCreate = (updatable) =>
             {
                 updatables.Add(updatable);
+            };
+
+            OnLateUpdatableCreate = (lateUpdatable) =>
+            {
+                lateUpdatables.Add(lateUpdatable);
+            };
+
+            OnFixedUpdatableCreate = (fixedUpdatable) =>
+            {
+                fixedUpdatables.Add(fixedUpdatable);
             };
         }
 
@@ -83,6 +108,11 @@ namespace overhealer.Core
 
         public void OnFixedUpdate()
         {
+            foreach (var fixedUpdatable in fixedUpdatables)
+            {
+                fixedUpdatable.OnFixedUpdate();
+            }
+
             gameStateMachine.FixedUpdateState();
         }
 
@@ -100,9 +130,24 @@ namespace overhealer.Core
             OnObjectCreate?.Invoke(newObject);
         }
 
+        public static void UnregisterObject(GameObject objectToDelete)
+        {
+            OnObjectDelete?.Invoke(objectToDelete);
+        }
+
         public static void RegisterUpdatable(IUpdatable updatable)
         {
             OnUpdatableCreate?.Invoke(updatable);
+        }
+
+        public static void RegisterLateUpdatable(ILateUpdatable updatable)
+        {
+            OnLateUpdatableCreate?.Invoke(updatable);
+        }
+
+        public static void RegisterFixedUpdatable(IFixedUpdatable updatable)
+        {
+            OnFixedUpdatableCreate?.Invoke(updatable);
         }
 
         public static void DestoyObject(GameObject objectToDelete)
@@ -110,11 +155,6 @@ namespace overhealer.Core
             UnregisterObject(objectToDelete);
 
             UnityEngine.Object.Destroy(objectToDelete);
-        }
-
-        public static void UnregisterObject(GameObject objectToDelete)
-        {
-            OnObjectDelete?.Invoke(objectToDelete);
         }
     }
 }

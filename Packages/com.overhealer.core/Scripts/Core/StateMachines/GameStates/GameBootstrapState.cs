@@ -54,6 +54,16 @@ namespace overhealer.Core
                 {
                     GameInstance.RegisterUpdatable(service as IUpdatable);
                 }
+
+                if (service is ILateUpdatable)
+                {
+                    GameInstance.RegisterLateUpdatable(service as ILateUpdatable);
+                }
+
+                if (service is IFixedUpdatable)
+                {
+                    GameInstance.RegisterFixedUpdatable(service as IFixedUpdatable);
+                }
             }
 
             uiService.InitUI();
